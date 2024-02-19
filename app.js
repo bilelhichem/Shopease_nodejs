@@ -9,4 +9,8 @@ app.use(bodyParser.json()); //Cela signifie qu'il prend les donnÃ©es JSON envoyÃ
 
 app.use('/',router);
 
+app.use('/',(req,res)=>{
+    res.send('hello world');
+})
+
 module.exports = app ; 

@@ -10,3 +10,12 @@
   
   
   <img width="1440" alt="Screenshot 2024-02-17 at 8 34 53 PM" src="https://github.com/bilelhichem/Shopease_nodejs/assets/101928436/b50f8c77-283c-4787-88a8-c36f3a537477">
+
+
+// EMAIL FORMAT VALIDATION 
+npm install node-email-verifier --save
+
+
+//  crypto library pour donner unique id et aussy pour 
+
+npm i crypto
