@@ -1,6 +1,7 @@
 const UserService = require('../Services/Users.services');
 const UserModel = require('../Models/users.model');
 const crypto = require("crypto");
+const sendEmail = require("../utiles/SendEmail");
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -11,12 +12,14 @@ exports.RegisterUser = async (req, res, next) => {
       
         
      const { FirstName, SecondName, email, password } = req.body;
+
      const  id = crypto.randomBytes(16).toString("hex") ;
       
-    const { error } = UserModel.validateUser(req.body);
+    const { error } = UserModel.validateUser({email,password});
 
        if (error) {
-        return res.status(400).json({ message: "Invalid data", details: error.details });}
+        return res.status(400).json({ message: "Invalid data", details: error.details });
+      }
 
     const existingUser = await UserService.FindUser(email);
 
@@ -100,25 +103,24 @@ exports.LoginUser = async (req,res,next)=>{
 
 
 
-
-exports.ForgetPassword = async(req,res,next)=>{
+exports.forgotPassword = async (req,res,next) =>{
 
   try {
-    const {email} = req.body ; 
-      
-      const user = await UserService.FindUser(email);
+   const {email} = req.body;
+    const user = await UserService.FindUser(email);
 
-      if (!user) {
-        return res.status(400).json({ message: "User n'exist pas "});
-      }
-
-      
-   
-  } catch (e) {
-    
-  }
+    if (!user)
+        return res.status(400).send("user with given email doesn't exist");
 
 
+    const link = `${process.env.BASE_URL}/password-reset/${user._id}}`;
+    await sendEmail(user.email, "Password reset", link);
+
+    res.send("password reset link sent to your email account");
+} catch (error) {
+    res.send("An error occured");
+    console.log(error);
+}
+}
 
 
-};

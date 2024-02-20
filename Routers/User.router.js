@@ -5,5 +5,7 @@ router.post('/api/RegisterUser',UserController.RegisterUser);
 
 router.post('/api/LoginUser',UserController.LoginUser);
 
+router.post('/api/forgotpassword',UserController.forgotPassword);
+
 
 module.exports = router;
