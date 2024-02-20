@@ -39,8 +39,6 @@ const UserSchema = new Schema({
 
 function validateUser(user) {
     const schema = Joi.object({
-        FirstName: Joi.string().max(255).required(),
-        SecondName: Joi.string().max(255).required(),
         email: Joi.string().min(5).max(255).required().email(),
         password: Joi.string().min(8).max(100).required()
     });
@@ -65,7 +63,10 @@ UserSchema.pre("save",async function(){
 });
 
 
-
+  
+UserSchema.methods.matchPassword = async function (password) {
+    return await bcrypt.compare(password, this.password);
+  };
 
 
 

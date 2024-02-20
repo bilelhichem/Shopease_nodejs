@@ -1,7 +1,11 @@
 const UserModel = require('../Models/users.model');
-
+const jwt = require('jsonwebtoken');
 
 class UserService {
+    //--------------------------------------------------------------------------------------------------------------------------------
+
+
+
     static async FindUser(email){
         try{
          return await UserModel.User.findOne({email});
@@ -10,6 +14,9 @@ class UserService {
         }
     }
   
+    //--------------------------------------------------------------------------------------------------------------------------------
+
+
     static async AddUser(id,FirstName, SecondName, email, password) {
         try {
            const user = new UserModel.User({
@@ -27,7 +34,15 @@ class UserService {
     }
 
     
-   
+
+    //--------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    static async generateAccessToken(tokenData,JWTSecret_Key,JWT_EXPIRE){
+        return jwt.sign(tokenData, JWTSecret_Key, { expiresIn: JWT_EXPIRE });
+    }
+
+
 
 
 }
