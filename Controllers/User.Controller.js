@@ -5,6 +5,7 @@ const crypto = require("crypto");
 
 exports.RegisterUser = async (req, res, next) => {
       try { 
+        
      const { FirstName, SecondName, email, password } = req.body;
      const  id = crypto.randomBytes(16).toString("hex") ;
       
@@ -15,8 +16,14 @@ exports.RegisterUser = async (req, res, next) => {
         return res.status(400).json({ message: "Invalid data", details: error.details });
     }
 
-  
+    const existingUser = await UserService.FindUser(email);
+
+    if (existingUser) {
+      return res.status(400).json({ message: "User is already exist"});
+    }
+
       const user = await UserService.AddUser(id,FirstName, SecondName, email, password);
+     
       res.status(200).json({ status: true, success: `${FirstName} Is Already Registered`});
       
     } catch (error) {

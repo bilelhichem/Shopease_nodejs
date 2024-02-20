@@ -2,6 +2,13 @@ const UserModel = require('../Models/users.model');
 
 
 class UserService {
+    static async FindUser(email){
+        try{
+         return await UserModel.User.findOne({email});
+        }catch(e){
+             console.log(e.message);
+        }
+    }
   
     static async AddUser(id,FirstName, SecondName, email, password) {
         try {
@@ -20,13 +27,7 @@ class UserService {
     }
 
     
-    static async FindUser(id){
-        try{
-          
-        }catch(e){
-
-        }
-    }
+   
 
 
 }

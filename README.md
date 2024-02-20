@@ -19,3 +19,8 @@ npm install node-email-verifier --save
 //  crypto library pour donner unique id et aussy pour 
 
 npm i crypto
+
+
+// BCRYPT pour hashe password and encypt passowd pour faire comparaison de login 
+
+npm i bcrypt

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
-
+const bcrypt = require('bcrypt');
 
 const Schema = mongoose.Schema;
 
@@ -35,7 +35,7 @@ const UserSchema = new Schema({
     }
 });
 
-const User = mongoose.model("UserDb", UserSchema);
+
 
 function validateUser(user) {
     const schema = Joi.object({
@@ -50,7 +50,28 @@ function validateUser(user) {
   
 
 
+UserSchema.pre("save",async function(){
+    var user = this;
+    if(!user.isModified("password")){
+        return
+    }
+    try{
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(user.password,salt);
+        user.password = hash;
+    }catch(err){
+        throw err;
+    }
+});
 
+
+
+
+
+
+
+
+const User = mongoose.model("UserDb", UserSchema);
 module.exports = {
     validateUser,
     User,
