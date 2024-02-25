@@ -1,9 +1,7 @@
 const UserService = require('../Services/Users.services');
 const UserModel = require('../Models/users.model');
 const crypto = require("crypto");
-const sendEmail = require("../utiles/SendEmail");
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -98,29 +96,5 @@ exports.LoginUser = async (req,res,next)=>{
 }
 
 
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-exports.forgotPassword = async (req,res,next) =>{
-
-  try {
-   const {email} = req.body;
-    const user = await UserService.FindUser(email);
-
-    if (!user)
-        return res.status(400).send("user with given email doesn't exist");
-
-
-    const link = `${process.env.BASE_URL}/password-reset/${user._id}}`;
-    await sendEmail(user.email, "Password reset", link);
-
-    res.send("password reset link sent to your email account");
-} catch (error) {
-    res.send("An error occured");
-    console.log(error);
-}
-}
-
+// authentifcation par google 
 

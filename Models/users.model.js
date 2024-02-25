@@ -33,7 +33,8 @@ const UserSchema = new Schema({
         required: false,
         minlength: 8,
         maxlength: 100
-    }
+    },
+  
 });
 
 
@@ -71,21 +72,6 @@ UserSchema.methods.matchPassword = async function (password) {
 
 
 
-
-  UserSchema.methods.getResetPasswordToken = function () {
-    const resetToken = crypto.randomBytes(20).toString("hex");
-  
-    // Hash token (private key) and save to database
-    this.resetPasswordToken = crypto
-      .createHash("sha256")
-      .update(resetToken)
-      .digest("hex");
-  
-    // Set token expire date
-    this.resetPasswordExpire = Date.now() + 10 * (60 * 1000); // Ten Minutes
-  
-    return resetToken;
-  };
 
 
 

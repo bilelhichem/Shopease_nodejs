@@ -24,3 +24,9 @@ npm i crypto
 // BCRYPT pour hashe password and encypt passowd pour faire comparaison de login 
 
 npm i bcrypt
+
+// npm install passport passport-google-oauth20  using in authentification google auth
+
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const UserService = require('./Services/Users.services'); 
+
